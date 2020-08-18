@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "./HeaderComponent";
 import Home from "./HomeComponent";
 import Menu from "./MenuComponent";
+import DishDetails from './DishdetailComponent';
 import Contact from './ContactComponent';
 import Footer from "./FooterComponent";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -31,25 +32,35 @@ class Main extends Component {
       );
     }
 
+    const DishDetailsPage = (props) => {
+      return (
+        <DishDetails dish={this.state.dishes.filter(dish => dish.id.toString() === props.match.params.dishId)[0]}
+          comments={this.state.comments.filter(comment => comment.dishId.toString() === props.match.params.dishId)}
+        />
+      );
+    }
+
     return (
       <div>
         <Header />
-        <div className="container">
-          <Switch>
-            <Route path="/home" component={HomePage} />
-            <Route
-              exact
-              path="/menu"
-              component={() => <Menu dishes={this.state.dishes} />}
-            />
-            <Route
-              exact
-              path="/contactus"
-              component={Contact}
-            />
-            <Redirect to="/home" />
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/home" component={HomePage} />
+          <Route
+            exact
+            path="/menu"
+            component={() => <Menu dishes={this.state.dishes} />}
+          />
+          <Route
+            path="/menu/:dishId"
+            component={DishDetailsPage}
+          />
+          <Route
+            exact
+            path="/contactus"
+            component={Contact}
+          />
+          <Redirect to="/home" />
+        </Switch>
         <Footer />
       </div>
     );
