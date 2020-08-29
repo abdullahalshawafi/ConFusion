@@ -227,7 +227,7 @@ class Contact extends Component {
                 </Col>
                 <Col md={{ size: 3, offset: 1 }}>
                   <Control.select
-                    model="contactType"
+                    model=".contactType"
                     name="contactType"
                     className="form-control"
                   >
@@ -237,12 +237,12 @@ class Contact extends Component {
                 </Col>
               </Row>
               <Row className="form-group">
-                <Label for="message" md={2}>
+                <Label htmlFor="message" md={2}>
                   Your Feedback
                 </Label>
                 <Col md={10}>
                   <Control.textarea
-                    model="message"
+                    model=".message"
                     id="message"
                     name="message"
                     rows={12}
