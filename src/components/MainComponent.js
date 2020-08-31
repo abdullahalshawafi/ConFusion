@@ -8,6 +8,7 @@ import Contact from "./ContactComponent";
 import Footer from "./FooterComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { addComment } from "../redux/ActionCreators";
 
 const mapStateToProps = (state) => {
   return {
@@ -17,6 +18,10 @@ const mapStateToProps = (state) => {
     leaders: state.leaders,
   };
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+});
 
 function Main(p) {
   const HomePage = () => {
@@ -40,6 +45,7 @@ function Main(p) {
         comments={p.comments.filter(
           (comment) => comment.dishId.toString() === props.match.params.dishId
         )}
+        addComment={p.addComment}
       />
     );
   };
@@ -68,4 +74,4 @@ function Main(p) {
   );
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
