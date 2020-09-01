@@ -38,8 +38,8 @@ class Main extends Component {
     return (
       <Home
         dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
-        dishesLoading={this.props.dish.isLoading}
-        dishesErrMsg={this.props.dish.errMsg}
+        dishesLoading={this.props.dishes.isLoading}
+        dishesErrMsg={this.props.dishes.errMsg}
         promotion={this.props.promotions.filter((promoiton) => promoiton.featured)[0]}
         leader={this.props.leaders.filter((leader) => leader.featured)[0]}
       />
@@ -54,8 +54,8 @@ class Main extends Component {
             (dish) => dish.id.toString() === props.match.params.dishId
           )[0]
         }
-        isLoading={this.props.dish.isLoading}
-        errMsg={this.props.dish.errMsg}
+        isLoading={this.props.dishes.isLoading}
+        errMsg={this.props.dishes.errMsg}
         comments={this.props.comments.filter(
           (comment) => comment.dishId.toString() === props.match.params.dishId
         )}
