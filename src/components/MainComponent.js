@@ -50,7 +50,7 @@ class Main extends Component {
     return (
       <DishDetails
         dish={
-          this.props.dishes.filter(
+          this.props.dishes.dishes.filter(
             (dish) => dish.id.toString() === props.match.params.dishId
           )[0]
         }
