@@ -15,8 +15,21 @@ export const fetchDishes = () => (dispatch) => {
     dispatch(dishesLoading());
 
     return fetch(baseUrl + "dishes")
+        .then(response => {
+            if (response.ok)
+                return response;
+            else {
+                let err = new Error(`Error ${response.status}: ${response.statusText}`);
+                err.response = response;
+                throw err;
+            }
+        },
+            error => {
+                throw new Error(error.message);
+            })
         .then(response => response.json())
         .then(dishes => dispatch(addDishes(dishes)))
+        .catch(error => dispatch(dishesFailed(error.message)));
 }
 
 export const dishesLoading = () => ({
@@ -37,8 +50,21 @@ export const fetchPromos = () => (dispatch) => {
     dispatch(promosLoading());
 
     return fetch(baseUrl + "promotions")
+        .then(response => {
+            if (response.ok)
+                return response;
+            else {
+                let err = new Error(`Error ${response.status}: ${response.statusText}`);
+                err.response = response;
+                throw err;
+            }
+        },
+            error => {
+                throw new Error(error.message);
+            })
         .then(response => response.json())
         .then(promos => dispatch(addPromos(promos)))
+        .catch(error => dispatch(promosFailed(error.message)));
 }
 
 export const promosLoading = () => ({
@@ -57,8 +83,21 @@ export const addPromos = (promos) => ({
 
 export const fetchComments = () => (dispatch) => {
     return fetch(baseUrl + "comments")
+        .then(response => {
+            if (response.ok)
+                return response;
+            else {
+                let err = new Error(`Error ${response.status}: ${response.statusText}`);
+                err.response = response;
+                throw err;
+            }
+        },
+            error => {
+                throw new Error(error.message);
+            })
         .then(response => response.json())
         .then(comments => dispatch(addComments(comments)))
+        .catch(error => dispatch(commentsFailed(error.message)));
 }
 
 export const commentsFailed = (errMsg) => ({
