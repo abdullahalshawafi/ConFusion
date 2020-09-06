@@ -1,29 +1,39 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from "../shared/baseUrl";
+import Loading from './LoadingComponent';
+import { Fade, Stagger } from "react-animation-components";
 
 function RenderLeader({ leader }) {
     return (
-        <Media tag="li" key={leader.id}>
-            <Media left top>
-                <Media object src={leader.image} alt={leader.name} />
+        <Fade in>
+            <Media tag="li" key={leader.id}>
+                <Media left top>
+                    <Media object src={baseUrl + leader.image} alt={leader.name} />
+                </Media>
+                <Media body className="ml-5">
+                    <Media heading>{leader.name}</Media>
+                    <p>{leader.designation}</p>
+                    <p>{leader.description}</p>
+                </Media>
             </Media>
-            <Media body className="ml-5">
-                <Media heading>{leader.name}</Media>
-                <p>{leader.designation}</p>
-                <p>{leader.description}</p>
-            </Media>
-        </Media>
+        </Fade>
     );
 }
 
 function About(props) {
-
-    const leaders = props.leaders.map((leader) => {
-        return (
-            <RenderLeader leader={leader} />
-        );
-    });
+    let leaders = null;
+    if (props.leaders.isLoading)
+        leaders = <Loading />
+    else if (props.leaders.errMsg)
+        leaders = <h4>{props.leaders.errMsg}</h4>
+    else
+        leaders = props.leaders.leaders.map((leader) => {
+            return (
+                <RenderLeader leader={leader} />
+            );
+        });
 
     return (
         <div className="container">
@@ -81,7 +91,9 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {leaders}
+                        <Stagger in>
+                            {leaders}
+                        </Stagger>
                     </Media>
                 </div>
             </div>
